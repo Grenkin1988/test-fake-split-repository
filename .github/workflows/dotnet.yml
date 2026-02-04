@@ -31,10 +31,14 @@ jobs:
         run: |
           echo "shared_version=1.0.0-ci.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
+      - name: Build Common
+        run: |
+          dotnet build Common/Common.slnx -c Release /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
+
       - name: Pack Common (to local feed)
         run: |
           mkdir -p local_nuget
-          dotnet pack Common/Common.slnx -c Release -o ./local_nuget /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
+          dotnet pack Common/Common.slnx -c Release -o ./local_nuget --no-build /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
 
       - name: Upload local_nuget as artifact
         uses: actions/upload-artifact@v4

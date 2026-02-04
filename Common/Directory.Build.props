@@ -13,6 +13,7 @@
     <!-- Optional default output (still can override with -o) -->
     <PackageOutputPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\local_nuget\'))</PackageOutputPath>
 
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Only auto-pack when building inside Visual Studio -->
+    <GeneratePackageOnBuild Condition="'$(BuildingInsideVisualStudio)' == 'true'">true</GeneratePackageOnBuild>
   </PropertyGroup>
 </Project>
