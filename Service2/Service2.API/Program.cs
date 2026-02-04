@@ -20,7 +20,7 @@ app.MapGet("/health/common", () =>
     var sample = new Order(OrderId.New());
     sample.AddLine("SKU-1", 2, 10m);
 
-    var dto = new OrderDto(sample.Id.Value, sample.CreatedAt, sample.Total);
+    var dto = new OrderDto(sample.Id.Value, sample.CreatedAt, sample.Total, "FAKE_CURRENCY");
     return Results.Ok(new { ok = true, sample });
 });
 
