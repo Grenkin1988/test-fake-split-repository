@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-common:
+    name: Build & Pack Common
+    runs-on: ubuntu-latest
+    outputs:
+      shared_version: ${{ steps.version.outputs.shared_version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: |
+            **/*.csproj
+            **/Directory.Packages.props
+            **/NuGet.config
+
+      - name: Compute SharedPackageVersion
+        id: version
+        run: |
+          echo "shared_version=1.0.0-ci.${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Pack Common (to local feed)
+        run: |
+          mkdir -p local_nuget
+          dotnet pack Common/Common.sln -c Release -o ./local_nuget /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
+
+      - name: Upload local_nuget as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: local_nuget
+          path: local_nuget
+
+  build-services:
+    name: Build Services (using Common NuGets)
+    runs-on: ubuntu-latest
+    needs: build-common
+    env:
+      SHARED_VERSION: ${{ needs.build-common.outputs.shared_version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+          cache: true
+          cache-dependency-path: |
+            **/*.csproj
+            **/Directory.Packages.props
+            **/NuGet.config
+
+      - name: Download local_nuget artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: local_nuget
+          path: local_nuget
+
+      - name: Restore + Build Service1
+        run: |
+          dotnet restore Service1/Service1.sln /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet build   Service1/Service1.sln -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
+
+      - name: Restore + Build Service2
+        run: |
+          dotnet restore Service2/Service2.sln /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet build   Service2/Service2.sln -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
