@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <SharedPackageVersion Condition="'$(SharedPackageVersion)' == ''">1.0.0-local</SharedPackageVersion>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <PackageId>Common.Domain</PackageId>
+    <Authors>Repo</Authors>
+    <Description>Dummy shared domain.</Description>
+  </PropertyGroup>
+
+</Project>

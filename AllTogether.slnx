@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Common/">
+    <Project Path="Common/Common.Contracts/Common.Contracts.csproj" />
+    <Project Path="Common/Common.Domain/Common.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Service1/">
+    <Project Path="Service1/Service1.API/Service1.API.csproj" />
+  </Folder>
+  <Folder Name="/Service2/">
+    <Project Path="Service2/Service2.API/Service2.API.csproj" />
+  </Folder>
+</Solution>

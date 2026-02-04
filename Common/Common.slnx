@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Common.Contracts/Common.Contracts.csproj" />
+  <Project Path="Common.Domain/Common.Domain.csproj" />
+</Solution>
