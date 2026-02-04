@@ -34,7 +34,7 @@ jobs:
       - name: Pack Common (to local feed)
         run: |
           mkdir -p local_nuget
-          dotnet pack Common/Common.sln -c Release -o ./local_nuget /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
+          dotnet pack Common/Common.slnx -c Release -o ./local_nuget /p:SharedPackageVersion=${{ steps.version.outputs.shared_version }}
 
       - name: Upload local_nuget as artifact
         uses: actions/upload-artifact@v4
@@ -70,10 +70,10 @@ jobs:
 
       - name: Restore + Build Service1
         run: |
-          dotnet restore Service1/Service1.sln /p:SharedPackageVersion=$SHARED_VERSION
-          dotnet build   Service1/Service1.sln -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet restore Service1/Service1.slnx /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet build   Service1/Service1.slnx -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
 
       - name: Restore + Build Service2
         run: |
-          dotnet restore Service2/Service2.sln /p:SharedPackageVersion=$SHARED_VERSION
-          dotnet build   Service2/Service2.sln -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet restore Service2/Service2.slnx /p:SharedPackageVersion=$SHARED_VERSION
+          dotnet build   Service2/Service2.slnx -c Release --no-restore /p:SharedPackageVersion=$SHARED_VERSION
