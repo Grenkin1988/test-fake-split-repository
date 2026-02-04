@@ -21,7 +21,7 @@ app.MapPost("/orders", (CreateOrderRequest req) =>
     foreach (var line in req.Lines)
         order.AddLine(line.Sku, line.Quantity, line.Price);
 
-    var dto = new OrderDto(order.Id.Value, order.CreatedAt, order.Total);
+    var dto = new OrderCreated(order.Id.Value, order.CreatedAt);
     return Results.Ok(dto);
 });
 
