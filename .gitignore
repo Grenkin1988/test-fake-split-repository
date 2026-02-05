@@ -365,3 +365,5 @@ FodyWeavers.xsd
 # Local NuGet feed (generated packages)
 local_nuget/*
 !local_nuget/.gitkeep
+
+local.version.props

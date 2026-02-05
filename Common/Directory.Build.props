@@ -5,6 +5,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <!-- Make produced NuGets match what consumers expect -->
     <Version Condition="'$(SharedPackageVersion)' != ''">$(SharedPackageVersion)</Version>
+    <PackageVersion Condition="'$(SharedPackageVersion)' != ''">$(SharedPackageVersion)</PackageVersion>
 
     <IsPackable>true</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>

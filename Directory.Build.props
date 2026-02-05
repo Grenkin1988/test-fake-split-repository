@@ -1,4 +1,8 @@
 <Project>
+  <!-- Optional file that local scripts/VS can update -->
+  <Import Project="local.version.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)local.version.props')" />
+
   <PropertyGroup>
     <SharedPackageVersion Condition="'$(SharedPackageVersion)' == ''">1.0.0-local</SharedPackageVersion>
   </PropertyGroup>
